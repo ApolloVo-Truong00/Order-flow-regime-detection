@@ -7,6 +7,7 @@ This repository contains my work on a market microstructure modelling project, w
 - `project testing.ipynb` — Main project notebook containing the model development, analysis, and written report.
 - `Cartea_notes.pdf` — Notes from Cartea et al., with emphasis on market making, order imbalance, market order arrivals, and regime-based modelling.
 - `Hasbrouck_notes.pdf` — Notes from Hasbrouck, covering the Roll model, short-run price behaviour, and univariate time-series ideas relevant to the project.
+- `LOG.md` - Dated log of the project, especially aspects that forced me to step back and think. A lot of the work done behind the scenes don't show up anywhere else but here.  
 
 ## Project direction
 
