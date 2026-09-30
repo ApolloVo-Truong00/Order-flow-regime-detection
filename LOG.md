@@ -21,3 +21,13 @@ This means that there needs to be an extra mechanism that sits on top of the Mar
 With the actual foundational model being chosen, I'll place my focus towards reading on different detection methods in general and in the case of Markov chains to gain better understanding on the methods so that the eventual choice isn't arbitrary but backed by intuition and literature. 
 
 From where I stand, I see the start (Markov chain) and end (detection choice) of the model. Whatever additional modelling choices I may have to make in the intermediate stages will be considered when I get there, one being point 4 (time scale).
+
+30/09/2026
+
+After reading a survey on detection methods, I think I have a basic, high-level understanding of how it fits into my project. There are a few important mechanisms for the detection part of my model: the statistic used to define the decision rule, and the threshold used to compare the statistic. Both of these come together to give a decision rule, i.e. it tells us when our model should tell us that the market regime has changed by comparing the latest statistic to the threshold. The way we choose a rule and threshold is via an optimisation problem. An important idea is the balance between speed of detection and false alarms -- this is a trade-off. We can, in general, solve the optimisation problem to choose a rule and a threshold, but can also solve the optimisation problem under a family of existing decision rules. The latter makes more sense for this project as we're able to choose existing rules that are set out in the paper. The former is too involved and the point of the project isn't to dive deeply into detection methods. 
+
+The workflow for the detection model itself looks a bit like: choose a rule, solve optimisation under that family of rules to choose a threshold b. 
+
+The overall workflow for the entire model looks like: estimate Markov chain parameters, compute the statistic used for detection, choose rule family, calibrate threshold using optimisation criteria, apply rule continuously.
+
+We can think about this upcoming section like it is like two disconnected parts of a bigger model that we put together. First, focus on the Markov chain model and the detection methods independently. Then we can connect the two parts using the statistic we choose. 
