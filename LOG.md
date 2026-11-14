@@ -31,3 +31,13 @@ The workflow for the detection model itself looks a bit like: choose a rule, sol
 The overall workflow for the entire model looks like: estimate Markov chain parameters, compute the statistic used for detection, choose rule family, calibrate threshold using optimisation criteria, apply rule continuously.
 
 We can think about this upcoming section like it is like two disconnected parts of a bigger model that we put together. First, focus on the Markov chain model and the detection methods independently. Then we can connect the two parts using the statistic we choose. 
+
+14/11/2026
+
+A central aspect that needs to be addressed is how a market regime change is actually defined. Of course, I plan to use limit order imbalance as a proxy. If I naively also define a market regime change to be a transition from one limit order imbalance state to another, then the detection problem becomes redundant because limit order imbalances are directly observable. This project aims to say something about the underlying, unobservable states in the market using something that is observable. 
+
+The new model I plan to use is a time-homogeneous, continuous-time Markov chain. This model is completely determined by its generator. We can think of the generator as the driving force of the market, modelled by a CTMC. Hence we can assume that different market regimes corresponds to different generators, and changes in market regimes correspond to a change in generators. The change time, say gamma, will be fixed and known, allowing us to have a ground truth -- this is what enables us to determine how well the detection methods perform. 
+
+The resulting model is a piecewise, time-homogeneous CTMC defined by the generators changing at fixed, known times gamma. This model serves as the source of truth. Synthetic data can be generated using the Markov chain. The regime change time is known; this is gamma. 
+
+After thoughts: I think it may be important to also note (in future discussions) other methods of defining a regime other than through the generators. This specific definition uses the actual model to define the regime. What's interesting is that there is a way to change the underlying process through something that isn't directly observable, then try to detect when a regime changes through something that is observable. This may be close to reality where there are unobservable states that drive the process, forcing us to use a proxy to detect when the process has changed in some meaningful way.
