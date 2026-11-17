@@ -41,3 +41,20 @@ The new model I plan to use is a time-homogeneous, continuous-time Markov chain.
 The resulting model is a piecewise, time-homogeneous CTMC defined by the generators changing at fixed, known times gamma. This model serves as the source of truth. Synthetic data can be generated using the Markov chain. The regime change time is known; this is gamma. 
 
 After thoughts: I think it may be important to also note (in future discussions) other methods of defining a regime other than through the generators. This specific definition uses the actual model to define the regime. What's interesting is that there is a way to change the underlying process through something that isn't directly observable, then try to detect when a regime changes through something that is observable. This may be close to reality where there are unobservable states that drive the process, forcing us to use a proxy to detect when the process has changed in some meaningful way.
+
+17/11/2026
+
+A few modelling additional modelling choices that I am faced with are listed below. 
+
+Before diving into these, there is a practical element that I have been thinking about. This project has quite a lot of intermediate modelling choices that are important. Trying to optimise and rigorously justify each choice is not the objective of the project. Hence, I will try to keep the justification of each modelling choice at a minimum (but hopefully sufficient). 
+
+1. Choosing how the LO imbalance is partitioned. 
+- The generator of the CTMC is estimated using the number of transitions and total time spent in each state. The partitions shouldn't be too granular. I want to ensure that the generator can be estimated reliably. 
+- I want to also keep the states/partitions as intuitive as possible to maintain economic interpretation. 
+- Both of these considerations lead me to choosing something like [-1, -1/3), [-1/3, 1/3], (1/3, 1]. Interpretation is: ask-side dominance, relatively balanced, bid-side dominance (respectively). Additionally, each state has equal width. 
+
+2. Choosing how quoted imbalance V is defined.
+- Cartea presents a couple different ways of choosing how V is defined: at the touch (i.e. lowest ask and highest bid), all existing LO, best n levels (take the n distinct lowest asks and n distinct highest bids), orders within n ticks of midprice (fixed price distance around the midprice).
+- At the touch is simple, interpretable, but very local as it ignores the distribution of the liquidity deeper in the book. 
+- The other three capture more liquidity deeper in the book but they present additional modelling choices of n. 
+- From a practical, simplicity, interpretable point of view, I am leaning toward choosing at the touch. 
